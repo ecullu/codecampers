@@ -8,3 +8,11 @@ h1 {
 	text-align: center;
 	color: fuchsia;
 }
+
+/*shows logout button if user is signed in */
+.hide{
+	display: none;
+}
+.show{
+	display: default;
+}

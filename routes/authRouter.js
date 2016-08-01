@@ -1,4 +1,4 @@
- let Router = require('express').Router;
+let Router = require('express').Router;
 let passport = require ('passport')
 let User = require('../db/schema.js').User
 let checkAuth = require('../config/middleware.js').checkAuth
@@ -10,14 +10,14 @@ const authRouter = Router()
 authRouter
   .post('/register', function(req, res){
     // passport appends json-data to request.body
-    // console.log(req.body)
+    console.log('request body',req.body)
     let newUser = new User(req.body)
 
-    User.find({email: req.body.email}, function(err, results){
+    User.find({id: req.body.id}, function(err, results){
       if (err) return res.status(500).send('error saving querying db for user')
 
       if(results !== null && results.length > 0 ) { 
-        return res.status(401).send(`oops, record for <${req.body.email}> already exists`)
+        return res.status(401).send(`oops, record for <${req.body.id}> already exists`)
       }
 
       newUser.save(function(err, record){

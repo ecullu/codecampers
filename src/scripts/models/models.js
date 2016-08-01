@@ -4,7 +4,7 @@ import {app_name} from '../app'
 
 // ..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x
 const UserAuthModel = Backbone.Model.extend({
-	urlRoot: '/api/users',
+	urlRoot: 'api/users',
 	idAttribute: '_id'
 })
 
@@ -60,8 +60,12 @@ UserAuthModel.getCurrentUser = function() {
 // but, you may extend the UserAuthModel Constructor (which is a Backbone Model)
 const User = UserAuthModel.extend({
 	initialize: function(){
-
 	}
 })
 
-export { User }
+const UserCollection = Backbone.Collection.extend({
+	model: User,
+	url: 'api/users'
+})
+
+export { User , UserCollection }

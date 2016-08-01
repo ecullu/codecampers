@@ -39,6 +39,22 @@ let User = require('../db/schema.js').User
         })
       })  
     })
+    .post('/users', function(req, res){
+      console.log(req.body)
+      //checks if user already exists
+      User.count({linkedInId: req.body.linkedInId}, function(err,count){
+         if(count > 0){
+          return res.status(400).send('user already exists')
+        }
+        else{
+          var user = new User(req.body)
+          user.save(function(err){
+          if (err) return res.json(err)
+          res.json(user)
+          })
+        }
+      })
+    })
 
     // Routes for a Model(resource) should have this structure
 
