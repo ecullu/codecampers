@@ -68,4 +68,17 @@ const UserCollection = Backbone.Collection.extend({
 	url: 'api/users'
 })
 
-export { User , UserCollection }
+const RepoModel = Backbone.Model.extend({
+	url: ""
+})
+
+const RepoCollection = Backbone.Collection.extend({
+	model: RepoModel,
+	initialize: function(userName){
+		this.url = "https://api.github.com/users/" + userName + "/repos"
+	}
+})
+
+
+
+export { User, UserCollection, RepoCollection}

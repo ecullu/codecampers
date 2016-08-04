@@ -10,9 +10,27 @@ h1 {
 }
 
 /*shows logout button if user is signed in */
-.hide{
+.hidden{
 	display: none;
 }
-.show{
-	display: default;
+
+.user-info{
+	display: flex;
+}
+
+/*github and review tab buttons*/
+.tabs {
+    display: flex;
+    justify-content: space-around;
+}
+
+/*github repo style*/
+.repo-coll {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.repo-container {
+	width: 50%;
+	border: 1px solid #ddd;
 }

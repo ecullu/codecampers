@@ -1,1 +1,1 @@
-*{font-family:Helvetica, Arial, sans-serif;box-sizing:border-box}h1{font-size:300px;text-align:center;color:fuchsia}.hide{display:none}.show{display:default}
+*{font-family:Helvetica, Arial, sans-serif;box-sizing:border-box}h1{font-size:300px;text-align:center;color:fuchsia}.hidden{display:none}.user-info{display:flex}.tabs{display:flex;justify-content:space-around}.repo-coll{display:flex;flex-wrap:wrap}.repo-container{width:50%;border:1px solid #ddd}

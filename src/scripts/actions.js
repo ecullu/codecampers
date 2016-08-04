@@ -2,6 +2,7 @@ import Backbone from 'backbone'
 import CODERS_STORE from './store'
 import {User, UserCollection} from './models/models'
 import Header from './views/header'
+import toastr from 'toastr'
 
 const ACTIONS = {
 
@@ -14,7 +15,7 @@ const ACTIONS = {
 	},
 
 	getProfileData: function(){
-		let query = 'people/~:(id,first-name,last-name,headline,picture-url,picture-urls::(original),email-address,positions:(id,title,summary,company:(name)),educations:(id,school-name,field-of-study))'
+		let query = 'people/~:(id,first-name,last-name,headline,picture-url,picture-urls::(original),email-address,positions:(id,title,summary,company:(name)),api-standard-profile-request,specialties,summary)'
 		IN.API.Raw(query).method('GET').result(function(resData){
 			console.log('Linked in API Response: ', resData)
 			CODERS_STORE.set('dataReady', true)
@@ -73,12 +74,13 @@ const ACTIONS = {
 		// console.log('new user created', user)
 		user.save().then(
             (responseData) => {
-                alert('user is saved')
+                toastr.success("Thanks for your feedback", "You have registered successfully!")
                 console.log(responseData)
                 location.hash = "home"
+                ACTIONS.fetchUsers()
             },
             (error) => {
-                alert('error while saving user')
+                toastr.error('error while saving user')
                 console.log(error)
             }
         )
@@ -86,12 +88,35 @@ const ACTIONS = {
 
 	updateUserInfo: function(evtData){
 		console.log(evtData)
+		toastr.options = {
+		  "positionClass": "toast-bottom-center",
+		  "timeOut": "2000"
+		}
 		let user = CODERS_STORE.data.currentDbUser
 		user.set({
-			// githubName: userData.githubName
-			githubName: evtData.githubName.value
+			personal: {
+				githubName: evtData.githubName.value,
+				degree: evtData.degree.value,
+				portfolioUrl: evtData.portfolioUrl.value,
+			},
+			bootcamp: {
+				campName: evtData.campName.value,
+				location: evtData.location.value,
+				course: evtData.course.value,
+			},
+			review: {
+				ratio: evtData.ratio.value,
+				investment: evtData.investment.value,
+				advantages: evtData.advantages.value,
+				instructor: evtData.instructor.value
+			}
 		})
-		user.save()
+		user.save().then(function(success){
+			if(success){ toastr.success('Profile updated successfully!') }
+		},
+		function(error){
+			if(error){ toastr.error(error) }
+		})
 	},
 }
 

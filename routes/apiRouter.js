@@ -21,13 +21,14 @@ let User = require('../db/schema.js').User
       })
     })
     .put('/users/:_id', function(req, res){
-      User.findById(req.params._id, "-password",function(err, record){
-        if(err || !record) return res.json(err)
-        let recordWithUpdates = helpers.updateFields(record, req.body)
-        recordWithUpdates.save(function(err){
-          if(err) return res.json(err) 
-          res.json(recordWithUpdates)
-        })
+      console.log('sending put request')
+      User.findByIdAndUpdate(req.params._id, req.body ,function(err, record){
+        if(err) {
+            res.send(err)
+        }
+        else {
+            res.json(record)
+        }
       })
     })
     .delete('/users/:_id', function(req, res){
