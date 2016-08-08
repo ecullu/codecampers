@@ -64,34 +64,55 @@ const RegisterForm = React.createClass({
 				<div id="register-form">
 					<form onSubmit={this._handleRegister}>
                     	<h3>Tell us about your experience</h3>
-                    	<h5>This will help prospect students</h5>
-	                    <span>Degree</span><input name="degree" placeholder="Enter your college" /><br/>
-	                    <span>GitHub Username</span><input name="githubName" placeholder="Enter your GitHub Username" /><br/>
-	                    <input name="campName" type="text" defaultValue="The Iron Yard" placeholder="Enter the name of bootcamp" />
-	                    <h4>Enter the location of bootcamp</h4>
-	                    <input name="location" type="text" list="cities"/><br/>
-	                    <datalist id="cities">
-		 					{this._getCityList()}
-		                </datalist>    
-	                    <select name="course" defaultValue="default">
-                    	  <option value="default" disabled >Select your program</option>
-						  <option value="Ruby On Rails">Ruby On Rails</option> 
-						  <option value="JavaScript">JavaScript</option>
-						  <option value="iOS">iOS</option>
-						</select><br/>
-	                    <input name="portfolioUrl" type="url" placeholder="Enter the url of your portfolio" />
-	                    <h4>What is your opinion about instructor/student ratio. Were you able to find someone right away when you had questions ? </h4>
-	                    <textarea rows="6" cols="75" name="ratio"/>
-	                    <h4>Boot camp is a big investment, where do you think the money goes in TIY? Instructor assistance, lecture, environment, networking opportunities?</h4>
-	                    <textarea rows="6" cols="75" name="investment"/>
-	                    <h4>What were the advantages of TIY compare to online courses ?</h4>
-	                    <textarea rows="6" cols="75" name="advantages"/>
-	                    <h4>How did you like the instructor?</h4>
-	                    <textarea rows="6" cols="75"name="instructor"/>
-
-
-
-	                    <br/><button type="submit">Save</button>
+                    	<div className="form-group">
+                    		<label htmlFor="githubUsername"> Github Username (required)</label>
+                    		<input name="githubName" className="form-control" placeholder="Enter your GitHub Username" required/>
+                    	</div>
+                    	<div className="form-group">
+                    		<label htmlFor="degree"> Degree (required)</label>
+		                    <input name="degree" className="form-control" placeholder="Enter your degree" required/>
+		                </div>
+		                <div className="form-group">
+		                	<label htmlFor="campName"> Bootcamp Name (required) </label>
+		                	<input name="campName" className="form-control" type="text" defaultValue="The Iron Yard" placeholder="Enter the name of bootcamp" required/>
+		                </div>
+	    				<div className="form-group">
+	    					<label htmlFor="location">Bootcamp Location (required) </label>
+		                    <input name="location" className="form-control" type="text" list="cities" placeholder="Enter bootcamp location" required/>
+		                    <datalist id="cities">
+			 					{this._getCityList()}
+			                </datalist>
+			            </div>
+			            <div className="form-group">
+			            	<label htmlFor="course">Select your program (required)</label>
+		                    <select name="course" className="form-control" defaultValue="default" required>
+	                    	  <option value="default" disabled ></option>
+							  <option value="Ruby On Rails">Ruby On Rails</option> 
+							  <option value="JavaScript">JavaScript</option>
+							  <option value="iOS">iOS</option>
+							</select>
+						</div> 
+						<div className="form-group">
+							<label htmlFor="portfolioUrl"> Enter your portfolio website url</label>
+							<input name="portfolioUrl" className="form-control" type="url" placeholder="Enter url" />
+	                    </div>
+	                    <div className="form-group">
+		                    <label htmlFor="ratio" >What is your opinion about instructor/student ratio. Were you able to find someone right away when you had questions ? </label>
+		                    <textarea className="form-control" rows="6" name="ratio"/>
+		                </div>
+		                <div className="form-group">
+							<label htmlFor="investment">Boot camp is a big investment, where do you think the money goes in TIY? Instructor assistance, lecture, environment, networking opportunities?</label>
+							<textarea className="form-control" rows="6" name="investment"/>
+		                </div>
+		                <div className="form-group">
+							<label htmlFor="advantages">What were the advantages of TIY compare to online courses ?</label>
+							<textarea className="form-control" rows="6" name="advantages"/>
+		                </div>
+		                <div className="form-group">
+		                    <label htmlFor="instructor">How did you like the instructor?</label>
+		                    <textarea className="form-control" rows="6" name="instructor"/>
+	                    </div>
+	                    <button className="btn btn-primary" type="submit">Save</button>
                 	</form>
 				</div>
 			)

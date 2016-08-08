@@ -50,7 +50,8 @@ const User = React.createClass({
 		return {
 			userRepos: new RepoCollection(this.props.userModel.get('personal').githubName),
 			activeTab: 'gh',
-			showingIndex: '0'
+			showingRepoIndex: '0',
+			showingReview: '1',
 		}
 	},
 
@@ -65,18 +66,7 @@ const User = React.createClass({
 			})
 		})
 	},
-	// fetchGithubRepo: function(){
-	// 	let userRepos = new RepoCollection(this.props.userModel.get('personal').githubName)
-	// 	// userRepos.initialize(this.props.userModel.get('personal').githubName)
-	// 	let repoColl = userRepos.fetch({
-	// 		data:{
-	// 			key: GITHUB_TOKEN
-	// 		}
-	// 	}).then(function(){
-	// 		console.log('repo', userRepos.models)
-	// 		return userRepos.models
-	// 	})
-	// },
+
 	showGithub: function(){
 		this.setState({
 			activeTab: 'gh'
@@ -91,6 +81,44 @@ const User = React.createClass({
 		
 	},
 
+	getReview: function(index){
+		let reviewContainer = []
+		switch(index){
+			case '1':
+			reviewContainer.push(
+				<div key="r1">
+					<h6>What is your opinion about instructor/student ratio. Were you able to find someone right away when you had questions ? </h6>
+					<p>{this.props.userModel.get('review').ratio}</p>
+				 </div>
+				)
+			break;
+			case '2':
+			reviewContainer.push(
+				<div key="r2">
+					<h6>Boot camp is a big investment, where do you think the money goes in TIY? Instructor assistance, lecture, environment, networking opportunities?</h6>
+					<p>{this.props.userModel.get('review').investment}</p>
+				</div>
+				)
+			break;
+			case '3':
+			reviewContainer.push(
+				<div key="r3">
+					<h6>What were the advantages of TIY compare to online courses ?</h6>
+					<p>{this.props.userModel.get('review').advantages}</p>
+				</div>
+				)
+			break;
+			case '4':
+			reviewContainer.push(
+				<div key="r4">
+					<h6>How did you like the instructor?</h6>
+				    <p>{this.props.userModel.get('review').instructor}</p>
+				</div>
+				)
+		}
+		return reviewContainer
+	},
+
 	getRepoColl: function(startIndex){
 		let repoLength = this.state.userRepos.length
 		let repoColl = this.state.userRepos.map((repo) => <Repo key={repo.cid} repoModel={repo} />)
@@ -102,19 +130,24 @@ const User = React.createClass({
 		console.log('repo collection',repoColl)
 		console.log('displayed repos', displayedRepos)
 		return displayedRepos
-		// map((repo) => <Repo key={repo.cid} repoModel={repo} />)		
-		// let repoColl = this.state.userRepos.map((repo) => <Repo key={repo.cid} repoModel={repo} />)
 	},
 
-	handlePagination: function(event){
+	handleRepoPagination: function(event){
 		let showingPage = event.currentTarget.dataset.id
 		let repoIndex = (showingPage-1)*4
-		console.log('page', showingPage)
-		console.log('repo index',repoIndex)
+		// console.log('page', showingPage)
+		// console.log('repo index',repoIndex)
 		this.setState({
-			showingIndex: repoIndex
+			showingRepoIndex: repoIndex
 		})
 		
+	},
+
+	handleReviewPagination: function(event){
+		console.log('changing review state')
+		this.setState({
+			showingReview: event.currentTarget.dataset.id
+		})
 	},
 
 	getPaginationButtons: function(){
@@ -128,31 +161,35 @@ const User = React.createClass({
 		}
 		console.log(totalPages)
 		for(let i = 1; i <= totalPages; i ++){
-			navButtonArr.push( <li data-id={i} key={i} className="navOne" onClick={this.handlePagination}>&nbsp;</li>)
+			navButtonArr.push( <li data-id={i} key={i} className="navOne" onClick={this.handleRepoPagination}><a>{i}</a></li>)
 		}
 		console.log('nav button arr',navButtonArr)
 		return navButtonArr
 	},
 
 	render: function(){
-		let repoIndex = this.state.showingIndex
+		let repoIndex = this.state.showingRepoIndex
 		let ghClass = 'github',
-			reviewClass = 'review hidden'
+			reviewClass = 'review-container hidden',
+			ghTabClass = 'active-tab github-tab ',
+			reviewTabClass = 'review-tab'
 
 		if (this.state.activeTab === 'reviews') {
 			console.log('checking active tab')
-			reviewClass = 'review'
+			reviewClass = 'review-container'
 			ghClass = 'hidden github'
+			ghTabClass = 'github-tab'
+			reviewTabClass = 'active-tab review-tab '
 		}
 
 		// console.log('fetch repo',this.state.userRepos)
 		return (
-				<div className="user-container">
-					<div className="user-info">
-						<div className="photo">
+				<div className="col-md-6 user-container">
+					<div className="row user-info">
+						<div className="col-md-4 photo">
 							<img src={this.props.userModel.get('pictureUrls').values[0]}/>
 						</div>
-						<div className="user-details">
+						<div className="col-md-8 user-details">
 							<p>{this.props.userModel.get('firstName')} {this.props.userModel.get('lastName')}</p>
 							<p>Bootcamp: {this.props.userModel.get('bootcamp').campName}</p>
 							<p>Campus Location: {this.props.userModel.get('bootcamp').location}</p>
@@ -167,33 +204,58 @@ const User = React.createClass({
 					</div>
 					<div className="user-slider">
 						<div className="tabs">
-							<div className="github-tab">
-								<button onClick={this.showGithub}> GitHub </button>
+							<div className={ghTabClass} onClick={this.showGithub}>
+								 GitHub 
 							</div>
-							<div className="reviews-tab">
-								<button onClick={this.showReviews}> Reviews </button>
+							<div className={reviewTabClass} onClick={this.showReviews}>
+								 Bootcamp Review 
 							</div>							
 						</div>
 						<div className={ghClass}>
-							<div className="repo-coll">
+							<div className="row repo-coll">
 								{this.getRepoColl(repoIndex)}
 								{/*{this.state.userRepos.map((repo) => <Repo key={repo.cid} repoModel={repo} />)}*/}
 							</div>
-							<div className="repo-nav">
-								<ul>
+							<nav aria-label="...">
+								<ul className="pagination">
+									 <li data-id={Math.ceil(parseInt(this.state.showingRepoIndex)/4) - 1} onClick={this.handleRepoPagination}>
+								       <a aria-label="Previous">
+								         <span aria-hidden="true">&lt;</span>
+								       </a>
+								    </li>
 									{this.getPaginationButtons()}
+									<li data-id={Math.ceil(parseInt(this.state.showingRepoIndex)/4) + 1} onClick={this.handleRepoPagination}>
+								      <a aria-label="Next">
+								        <span aria-hidden="true">&gt;</span>
+								      </a>
+									</li>
 								</ul>
-							</div>
+							</nav>
 						</div>
-						<div className={reviewClass}>					
-			                <h6>What is your opinion about instructor/student ratio. Were you able to find someone right away when you had questions ? </h6>
-			                <p>{this.props.userModel.get('review').ratio}</p>
-		                    <h6>Boot camp is a big investment, where do you think the money goes in TIY? Instructor assistance, lecture, environment, networking opportunities?</h6>
-			                <p>{this.props.userModel.get('review').investment}</p>
-		                    <h6>What were the advantages of TIY compare to online courses ?</h6>
-			                <p>{this.props.userModel.get('review').advantages}</p>
-		                    <h6>How did you like the instructor?</h6>
-			                <p>{this.props.userModel.get('review').instructor}</p>
+						<div className={reviewClass}>
+							<div className="review">
+								{this.getReview(this.state.showingReview)}
+							</div>
+							<nav aria-label="...">
+								<ul className="pagination">
+									 <li data-id={parseInt(this.state.showingReview) - 1} onClick={this.handleReviewPagination}>
+								       <a aria-label="Previous">
+								         <span aria-hidden="true">&lt;</span>
+								       </a>
+								    </li>
+									    <li data-id="1" onClick={this.handleReviewPagination}><a>1</a></li>
+									    <li data-id="2" onClick={this.handleReviewPagination}><a>2</a></li>
+									    <li data-id="3" onClick={this.handleReviewPagination}><a>3</a></li>
+									    <li data-id="4" onClick={this.handleReviewPagination}><a>4</a></li>
+									    <li data-id="5" onClick={this.handleReviewPagination}><a>5</a></li>
+									    <li data-id="6" onClick={this.handleReviewPagination}><a>6</a></li>
+									<li data-id={parseInt(this.state.showingReview) + 1} onClick={this.handleReviewPagination}>
+								      <a aria-label="Next">
+								        <span aria-hidden="true">&gt;</span>
+								      </a>
+									</li>
+								</ul>
+							</nav>					
 						</div>
 					</div>
 				</div>
@@ -203,14 +265,19 @@ const User = React.createClass({
 
 const Repo = React.createClass({
 	render: function(){
-		// console.log('gh repo', this.props.repoModel)
-		// if(this.props.repoModel.get('homepage')){}
+		let liveUrl = ""
+		let sourceUrl = ""
+		if(this.props.repoModel.get('homepage')){ //splits url after data is fetched
+			liveUrl = this.props.repoModel.get('homepage').split('//')
+			sourceUrl = this.props.repoModel.get('html_url').split('//')
+		}
+		
 		return (
-			<div className="repo-container">
-				<p className="repo-name">{this.props.repoModel.get('name')}</p>
+			<div className="col-md-6 repo-container">
+				<div className="repo-name">{this.props.repoModel.get('name')}</div>
 				<p>Description: {this.props.repoModel.get('description')}</p>
-				<p>Live Site: <a target="_blank" href={this.props.repoModel.get('homepage')}>{this.props.repoModel.get('homepage')}</a></p>
-				<p>Source Code: <a target="_blank" href={this.props.repoModel.get('html_url')}> {this.props.repoModel.get('html_url')}</a></p>
+				<p>Live Site: <a target="_blank" href={this.props.repoModel.get('homepage')}>{liveUrl[1]}</a></p>
+				<p>Source Code: <a target="_blank" href={this.props.repoModel.get('html_url')}> {sourceUrl[1]}</a></p>
 			</div>
 			)
 	}
