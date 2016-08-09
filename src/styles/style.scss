@@ -19,12 +19,35 @@ h1 {
 	color: fuchsia;
 }
 
+/*full width header*/
+#header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 600;
+	width: 100%;
+	background-color: #ddd;
+}
+
+/*sets container below header*/
+.UsersContainer, .register {
+	margin: 10em 0 0 5em;
+}
+
+/*styles header nav buttons*/
+.nav-bar {
+    font-size: 2em;
+    letter-spacing: .1em;
+    vertical-align: middle;
+    margin-top: 0.5em;
+    text-align: center;
+}
+
 .logo h5{
 	font-family: 'BebasNeue Regular', sans-serif;
 	font-size: 4em;
 	color: #111;
 	letter-spacing: 0.1em;
-	background-color: #d5d5d5;
 }
 
 /*prevents user images to overflow container*/
@@ -187,6 +210,12 @@ h1 {
 	color: #111;
 }
 
+/*adds pointer cursor effect on sign in and logout buttons in header*/
+.nav-bar > a:hover {
+	cursor: pointer;
+	text-decoration: none;
+	font-weight: bolder;
+}
 
 /*changes the repo navigation bar cursor to pointer */
 li > a {

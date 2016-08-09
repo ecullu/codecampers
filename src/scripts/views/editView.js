@@ -2,6 +2,7 @@ import React from 'react'
 import ACTIONS from '../actions'
 import Header from './header'
 import CODERS_STORE from '../store'
+import Cities from '../cities'
 
 const EditView = React.createClass({
 	getInitialState: function(){
@@ -21,11 +22,11 @@ const EditView = React.createClass({
 	},
 
 	render: function(){
-		console.log('renderin edit view')
+		// console.log('renderin edit view')
 		return (
 				<div className="register">
 					<Header />
-					<EditForm currentUser={this.state.currentDbUser}/>
+					<EditForm currentDbUser={this.state.currentDbUser}/>
 				</div>
 			)
 	}
@@ -37,29 +38,67 @@ const EditForm = React.createClass({
 		ACTIONS.updateUserInfo(evt.currentTarget)
 	},
 
+	_getCityList: function(){
+    	return Cities.map(function(city){
+    		return <option key={city.rank} value={city.city}/>
+    	})
+    },
+
 	render: function(){
-		console.log('props in edit form',this.props.currentUser.get('personal').githubName)
+		console.log('props in edit form',this.props.currentDbUser)
 		return (
 			<div className="edit">
 				<form onSubmit={this._handleUpdate}>
-					<input name="githubName" defaultValue={this.props.currentUser.get('personal').githubName}/>
-					<input name="degree" defaultValue={this.props.currentUser.get('personal').degree}/>
-					<input name="portfolioUrl" defaultValue={this.props.currentUser.get('personal').portfolioUrl}/>
-					<br/>
-					<input name="campName" defaultValue={this.props.currentUser.get('bootcamp').campName}/>
-					<input name="location" defaultValue={this.props.currentUser.get('bootcamp').locaiton}/>
-					<input name="course" defaultValue={this.props.currentUser.get('bootcamp').course}/>
-					<br/>
-                    <h4>What is your opinion about instructor/student ratio. Were you able to find someone right away when you had questions ? </h4>
-                    <textarea rows="6" cols="75" name="ratio" defaultValue={this.props.currentUser.get('review').ratio}/>
-                    <h4>Boot camp is a big investment, where do you think the money goes in TIY? Instructor assistance, lecture, environment, networking opportunities?</h4>
-                    <textarea rows="6" cols="75" name="investment" defaultValue={this.props.currentUser.get('review').investment}/>
-                    <h4>What were the advantages of TIY compare to online courses ?</h4>
-                    <textarea rows="6" cols="75" name="advantages" defaultValue={this.props.currentUser.get('review').advantages}/>
-                    <h4>How did you like the instructor?</h4>                    
-                    <textarea rows="6" cols="75" name="instructor" defaultValue={this.props.currentUser.get('review').instructor}/>
-                    <br/>
-					<button type="submit">Save</button>
+				<h3>Profile</h3>
+                    	<div className="form-group">
+                    		<label htmlFor="githubUsername"> Github Username (required)</label>
+                    		<input name="githubName" className="form-control" defaultValue={this.props.currentDbUser.get('personal').githubName} required/>
+                    	</div>
+                    	<div className="form-group">
+                    		<label htmlFor="degree"> Degree (required)</label>
+		                    <input name="degree" className="form-control" defaultValue={this.props.currentDbUser.get('personal').degree} required/>
+		                </div>
+		                <div className="form-group">
+		                	<label htmlFor="campName"> Bootcamp Name (required) </label>
+		                	<input name="campName" className="form-control" type="text" defaultValue={this.props.currentDbUser.get('bootcamp').campName} required/>
+		                </div>
+	    				<div className="form-group">
+	    					<label htmlFor="location">Bootcamp Location (required) </label>
+		                    <input name="location" className="form-control" type="text" list="cities" defaultValue={this.props.currentDbUser.get('bootcamp').location} required/>
+		                    <datalist id="cities">
+			 					{this._getCityList()}
+			                </datalist>
+			            </div>
+			            <div className="form-group">
+			            	<label htmlFor="course">Select your program (required)</label>
+		                    <select name="course" className="form-control" defaultValue={this.props.currentDbUser.get('bootcamp').course} required>
+	                    	  <option value="default" disabled ></option>
+							  <option value="Ruby On Rails">Ruby On Rails</option> 
+							  <option value="JavaScript">JavaScript</option>
+							  <option value="iOS">iOS</option>
+							</select>
+						</div> 
+						<div className="form-group">
+							<label htmlFor="portfolioUrl"> Enter your portfolio website url</label>
+							<input name="portfolioUrl" className="form-control" type="url" defaultValue={this.props.currentDbUser.get('personal').portfolioUrl} />
+	                    </div>
+	                    <div className="form-group">
+		                    <label htmlFor="ratio" >What is your opinion about instructor/student ratio. Were you able to find someone right away when you had questions ? </label>
+		                    <textarea className="form-control" rows="6" name="ratio" defaultValue={this.props.currentDbUser.get('review').ratio}/>
+		                </div>
+		                <div className="form-group">
+							<label htmlFor="investment">Boot camp is a big investment, where do you think the money goes in TIY? Instructor assistance, lecture, environment, networking opportunities?</label>
+							<textarea className="form-control" rows="6" name="investment" defaultValue={this.props.currentDbUser.get('review').investment}/>
+		                </div>
+		                <div className="form-group">
+							<label htmlFor="advantages">What were the advantages of TIY compare to online courses ?</label>
+							<textarea className="form-control" rows="6" name="advantages" defaultValue={this.props.currentDbUser.get('review').advantages}/>
+		                </div>
+		                <div className="form-group">
+		                    <label htmlFor="instructor">How did you like the instructor?</label>
+		                    <textarea className="form-control" rows="6" name="instructor" defaultValue={this.props.currentDbUser.get('review').instructor}/>
+	                    </div>
+					<button type="submit" className="btn btn-primary">Save</button>
 				</form>
 			</div>
 			)

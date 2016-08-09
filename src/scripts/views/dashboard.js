@@ -134,13 +134,14 @@ const User = React.createClass({
 
 	handleRepoPagination: function(event){
 		let showingPage = event.currentTarget.dataset.id
-		let repoIndex = (showingPage-1)*4
 		// console.log('page', showingPage)
-		// console.log('repo index',repoIndex)
-		this.setState({
-			showingRepoIndex: repoIndex
-		})
-		
+		// console.log('handingling page navigation')
+			let repoIndex = (showingPage-1)*4
+			console.log('page', showingPage)
+			console.log('repo index',repoIndex)
+			this.setState({
+				showingRepoIndex: repoIndex
+			})
 	},
 
 	handleReviewPagination: function(event){
@@ -153,26 +154,48 @@ const User = React.createClass({
 	getPaginationButtons: function(){
 		let totalPages = 0
 		let navButtonArr = []
+		let navButtonClass = "navOne"
+		let currentPage = (this.state.showingRepoIndex + 4)/4
 		if(this.state.userRepos.length%4 === 0){
 			totalPages = (this.state.userRepos.length)/4
 		}
 		else{
 			totalPages = Math.ceil(this.state.userRepos.length/4)
 		}
-		console.log(totalPages)
+		// console.log(totalPages)
 		for(let i = 1; i <= totalPages; i ++){
-			navButtonArr.push( <li data-id={i} key={i} className="navOne" onClick={this.handleRepoPagination}><a>{i}</a></li>)
+			// highlights the active button
+			if(currentPage === i){
+				navButtonClass = "active navOne"
+			}
+			else{
+				navButtonClass = "navOne"
+			}
+			navButtonArr.push( <li data-id={i} key={i} className={navButtonClass} onClick={this.handleRepoPagination}><a>{i}</a></li>)
 		}
-		console.log('nav button arr',navButtonArr)
+		// console.log('nav button arr',navButtonArr)
 		return navButtonArr
 	},
 
 	render: function(){
 		let repoIndex = this.state.showingRepoIndex
+		// console.log('button arr length', this.getPaginationButtons().length)
+		console.log('showingRepoIndex',repoIndex)
 		let ghClass = 'github',
 			reviewClass = 'review-container hidden',
 			ghTabClass = 'active-tab github-tab ',
-			reviewTabClass = 'review-tab'
+			reviewTabClass = 'review-tab',
+			prevButtonClass = '',
+			nextButtonClass = ''
+
+		// limit functionality of arrow buttons based on current page
+		if(repoIndex < 4){
+			// console.log('disabling prev button!!!!!!!!!!!!')
+			prevButtonClass = "disabled"
+		}
+		if(repoIndex >= (this.getPaginationButtons().length * 4) - 4){
+			nextButtonClass = "disabled"
+		}
 
 		if (this.state.activeTab === 'reviews') {
 			console.log('checking active tab')
@@ -218,13 +241,13 @@ const User = React.createClass({
 							</div>
 							<nav aria-label="...">
 								<ul className="pagination">
-									 <li data-id={Math.ceil(parseInt(this.state.showingRepoIndex)/4) - 1} onClick={this.handleRepoPagination}>
+									 <li className={prevButtonClass} data-id={Math.ceil((parseInt(this.state.showingRepoIndex)+ 4)/4) - 1} onClick={this.handleRepoPagination}>
 								       <a aria-label="Previous">
 								         <span aria-hidden="true">&lt;</span>
 								       </a>
 								    </li>
 									{this.getPaginationButtons()}
-									<li data-id={Math.ceil(parseInt(this.state.showingRepoIndex)/4) + 1} onClick={this.handleRepoPagination}>
+									<li className={nextButtonClass} data-id={Math.ceil((parseInt(this.state.showingRepoIndex) + 4)/4) + 1} onClick={this.handleRepoPagination}>
 								      <a aria-label="Next">
 								        <span aria-hidden="true">&gt;</span>
 								      </a>

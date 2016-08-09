@@ -20,7 +20,7 @@ const Header = React.createClass({
 		return (
 				<div id="header">
 					<div className="col-md-8 logo">
-						<h5>code Campers</h5>
+						<h5>&lt; code Campers /&gt;</h5>
 					</div>
 					<div className="col-md-4 nav-bar">
 						<a href="#home"> Home </a>

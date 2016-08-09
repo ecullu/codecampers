@@ -20,7 +20,7 @@ const RegisterView = React.createClass({
 		console.log('renderin register view')
 		return (
 				<div className="register">
-					
+					<Header />
 					<RegisterForm />
 				</div>
 			)

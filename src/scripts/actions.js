@@ -25,7 +25,7 @@ const ACTIONS = {
 				let userColl = CODERS_STORE.data.collection
 				var currentUser = userColl.where({linkedInId: resData.linkedInId})
 				if(currentUser.length === 0){
-					console.log('changin hash')
+					console.log('changing hash')
 					location.hash = "register"
 				}
 				else{
@@ -43,7 +43,7 @@ const ACTIONS = {
 			let user = CODERS_STORE.data.collection.where({linkedInId: CODERS_STORE.data.authorizedUser.linkedInId})
 			// console.log('user in get current user', user[0])
 			CODERS_STORE.set('currentDbUser', user[0])
-			// console.log('coder store', CODERS_STORE.data.currentDbUser)
+			console.log('coder store', CODERS_STORE.data.currentDbUser)
 		})
 
 	},
@@ -53,7 +53,10 @@ const ACTIONS = {
 	},
 
 	logUserOut: function (){
-		IN.User.logout(()=>{console.log('logging outtt!!')})
+		IN.User.logout(()=>{
+			console.log('logging outtt!!')
+			location.hash = "home"
+		})
 	},
 
 	redirectHome: function(){
