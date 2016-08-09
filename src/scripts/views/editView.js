@@ -47,7 +47,7 @@ const EditForm = React.createClass({
 	render: function(){
 		console.log('props in edit form',this.props.currentDbUser)
 		return (
-			<div className="edit">
+			<div className="edit-form">
 				<form onSubmit={this._handleUpdate}>
 				<h3>Profile</h3>
                     	<div className="form-group">
@@ -83,19 +83,19 @@ const EditForm = React.createClass({
 							<input name="portfolioUrl" className="form-control" type="url" defaultValue={this.props.currentDbUser.get('personal').portfolioUrl} />
 	                    </div>
 	                    <div className="form-group">
-		                    <label htmlFor="ratio" >What is your opinion about instructor/student ratio. Were you able to find someone right away when you had questions ? </label>
+		                    <label htmlFor="ratio" >What is your opinion about instructor/student ratio ? </label>
 		                    <textarea className="form-control" rows="6" name="ratio" defaultValue={this.props.currentDbUser.get('review').ratio}/>
 		                </div>
 		                <div className="form-group">
-							<label htmlFor="investment">Boot camp is a big investment, where do you think the money goes in TIY? Instructor assistance, lecture, environment, networking opportunities?</label>
+							<label htmlFor="investment">Boot camp is a big investment, where do you think the money goes in bootcamps ? </label>
 							<textarea className="form-control" rows="6" name="investment" defaultValue={this.props.currentDbUser.get('review').investment}/>
 		                </div>
 		                <div className="form-group">
-							<label htmlFor="advantages">What were the advantages of TIY compare to online courses ?</label>
+							<label htmlFor="advantages">What are the advantages of bootcamps compare to online courses ?</label>
 							<textarea className="form-control" rows="6" name="advantages" defaultValue={this.props.currentDbUser.get('review').advantages}/>
 		                </div>
 		                <div className="form-group">
-		                    <label htmlFor="instructor">How did you like the instructor?</label>
+		                    <label htmlFor="instructor">How did you like the instructor ?</label>
 		                    <textarea className="form-control" rows="6" name="instructor" defaultValue={this.props.currentDbUser.get('review').instructor}/>
 	                    </div>
 					<button type="submit" className="btn btn-primary">Save</button>

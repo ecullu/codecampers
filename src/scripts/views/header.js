@@ -18,7 +18,7 @@ const Header = React.createClass({
 
 		
 		return (
-				<div id="header">
+				<div className="container-fluid" id="header">
 					<div className="col-md-8 logo">
 						<h5>&lt; code Campers /&gt;</h5>
 					</div>

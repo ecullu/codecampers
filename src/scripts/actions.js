@@ -72,9 +72,11 @@ const ACTIONS = {
 		// console.log('register user data', userData)
 		/// now wrap it in a backbone model and save it!
 		let user = new User(userData)
+		console.log(user)
 
 		// user.attributes = ....^^
 		// console.log('new user created', user)
+		console.log('registring usr')
 		user.save().then(
             (responseData) => {
                 toastr.success("Thanks for your feedback", "You have registered successfully!")

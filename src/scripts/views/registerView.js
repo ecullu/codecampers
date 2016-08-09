@@ -6,16 +6,6 @@ import Cities from '../cities'
 
 const RegisterView = React.createClass({
 
-	// getInitialState: function(){
-	// 	return CODERS_STORE.getData()
-	// },
-
-	// componentWillMount: function(){
-	// 	CODERS_STORE.on('updateContent', () => {
-	// 		this.setState(CODERS_STORE.getData())
-	// 	})
-	// },
-
 	render: function(){
 		console.log('renderin register view')
 		return (
@@ -93,23 +83,23 @@ const RegisterForm = React.createClass({
 							</select>
 						</div> 
 						<div className="form-group">
-							<label htmlFor="portfolioUrl"> Enter your portfolio website url</label>
-							<input name="portfolioUrl" className="form-control" type="url" placeholder="Enter url" />
+							<label htmlFor="portfolioUrl"> Enter your portfolio website</label>
+							<input name="portfolioUrl" className="form-control" type="url" placeholder="Enter website url" />
 	                    </div>
 	                    <div className="form-group">
-		                    <label htmlFor="ratio" >What is your opinion about instructor/student ratio. Were you able to find someone right away when you had questions ? </label>
+		                    <label htmlFor="ratio" >What is your opinion about instructor/student ratio ? </label>
 		                    <textarea className="form-control" rows="6" name="ratio"/>
 		                </div>
 		                <div className="form-group">
-							<label htmlFor="investment">Boot camp is a big investment, where do you think the money goes in TIY? Instructor assistance, lecture, environment, networking opportunities?</label>
+							<label htmlFor="investment">Boot camp is a big investment, where do you think the money goes in bootcamps ? </label>
 							<textarea className="form-control" rows="6" name="investment"/>
 		                </div>
 		                <div className="form-group">
-							<label htmlFor="advantages">What were the advantages of TIY compare to online courses ?</label>
+							<label htmlFor="advantages">What are the advantages of bootcamps compare to online courses ? </label>
 							<textarea className="form-control" rows="6" name="advantages"/>
 		                </div>
 		                <div className="form-group">
-		                    <label htmlFor="instructor">How did you like the instructor?</label>
+		                    <label htmlFor="instructor">How did you like the instructor ?</label>
 		                    <textarea className="form-control" rows="6" name="instructor"/>
 	                    </div>
 	                    <button className="btn btn-primary" type="submit">Save</button>

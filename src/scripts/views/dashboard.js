@@ -87,7 +87,7 @@ const User = React.createClass({
 			case '1':
 			reviewContainer.push(
 				<div key="r1">
-					<h6>What is your opinion about instructor/student ratio. Were you able to find someone right away when you had questions ? </h6>
+					<h6>What is your opinion about instructor/student ratio ? </h6>
 					<p>{this.props.userModel.get('review').ratio}</p>
 				 </div>
 				)
@@ -95,7 +95,7 @@ const User = React.createClass({
 			case '2':
 			reviewContainer.push(
 				<div key="r2">
-					<h6>Boot camp is a big investment, where do you think the money goes in TIY? Instructor assistance, lecture, environment, networking opportunities?</h6>
+					<h6>Boot camp is a big investment, where do you think the money goes in bootcamps? </h6>
 					<p>{this.props.userModel.get('review').investment}</p>
 				</div>
 				)
@@ -103,7 +103,7 @@ const User = React.createClass({
 			case '3':
 			reviewContainer.push(
 				<div key="r3">
-					<h6>What were the advantages of TIY compare to online courses ?</h6>
+					<h6>What were the advantages of bootcamps compare to online courses ?</h6>
 					<p>{this.props.userModel.get('review').advantages}</p>
 				</div>
 				)
@@ -111,7 +111,7 @@ const User = React.createClass({
 			case '4':
 			reviewContainer.push(
 				<div key="r4">
-					<h6>How did you like the instructor?</h6>
+					<h6>How did you like the instructor ?</h6>
 				    <p>{this.props.userModel.get('review').instructor}</p>
 				</div>
 				)
@@ -151,6 +151,22 @@ const User = React.createClass({
 		})
 	},
 
+	getReviewPaginationButtons: function (){
+		let reviewNavButtonClass = ""
+		let reviewNavButtonArr = []
+		console.log('showing review',this.state.showingReview)
+		for (let i = 1; i <= 4; i++){
+			if(parseInt(this.state.showingReview) === i){
+				reviewNavButtonClass = "active"
+			}
+			else{
+				reviewNavButtonClass = ""
+			}
+			reviewNavButtonArr.push( <li className={reviewNavButtonClass} data-id={i} key={i} onClick={this.handleReviewPagination}><a>{i}</a></li>)
+		}
+		return reviewNavButtonArr
+	},
+
 	getPaginationButtons: function(){
 		let totalPages = 0
 		let navButtonArr = []
@@ -180,15 +196,24 @@ const User = React.createClass({
 	render: function(){
 		let repoIndex = this.state.showingRepoIndex
 		// console.log('button arr length', this.getPaginationButtons().length)
-		console.log('showingRepoIndex',repoIndex)
+		// console.log('showingRepoIndex',repoIndex)
+		console.log('showing review', this.state.showingReview)
 		let ghClass = 'github',
 			reviewClass = 'review-container hidden',
 			ghTabClass = 'active-tab github-tab ',
 			reviewTabClass = 'review-tab',
 			prevButtonClass = '',
-			nextButtonClass = ''
+			nextButtonClass = '',
+			reviewPrevButtonClass = '',
+			reviewNextButtonClass = ''
 
 		// limit functionality of arrow buttons based on current page
+		if(this.state.showingReview === "1"){
+			reviewPrevButtonClass = "disabled"
+		}
+		if(this.state.showingReview === "4"){
+			reviewNextButtonClass = "disabled"
+		}
 		if(repoIndex < 4){
 			// console.log('disabling prev button!!!!!!!!!!!!')
 			prevButtonClass = "disabled"
@@ -208,12 +233,14 @@ const User = React.createClass({
 		// console.log('fetch repo',this.state.userRepos)
 		return (
 				<div className="col-md-6 user-container">
+					<div className="col-md-12 username">
+							<h3>{this.props.userModel.get('firstName')} {this.props.userModel.get('lastName')}</h3>
+					</div>
 					<div className="row user-info">
 						<div className="col-md-4 photo">
 							<img src={this.props.userModel.get('pictureUrls').values[0]}/>
 						</div>
 						<div className="col-md-8 user-details">
-							<p>{this.props.userModel.get('firstName')} {this.props.userModel.get('lastName')}</p>
 							<p>Bootcamp: {this.props.userModel.get('bootcamp').campName}</p>
 							<p>Campus Location: {this.props.userModel.get('bootcamp').location}</p>
 							<p>Course: {this.props.userModel.get('bootcamp').course}</p>
@@ -227,12 +254,18 @@ const User = React.createClass({
 					</div>
 					<div className="user-slider">
 						<div className="tabs">
+							<ul className="nav nav-tabs">
+								<li role="presentation" className="active"><a onClick={this.showGithub}>GitHub </a></li>
+								<li role="presentation"><a onClick={this.showReviews}> Bootcamp Review</a></li>
+							</ul>
+							{/*
 							<div className={ghTabClass} onClick={this.showGithub}>
 								 GitHub 
 							</div>
 							<div className={reviewTabClass} onClick={this.showReviews}>
 								 Bootcamp Review 
-							</div>							
+							</div>	
+							*/}						
 						</div>
 						<div className={ghClass}>
 							<div className="row repo-coll">
@@ -261,18 +294,13 @@ const User = React.createClass({
 							</div>
 							<nav aria-label="...">
 								<ul className="pagination">
-									 <li data-id={parseInt(this.state.showingReview) - 1} onClick={this.handleReviewPagination}>
+									 <li className={reviewPrevButtonClass} data-id={parseInt(this.state.showingReview) - 1} onClick={this.handleReviewPagination}>
 								       <a aria-label="Previous">
 								         <span aria-hidden="true">&lt;</span>
 								       </a>
 								    </li>
-									    <li data-id="1" onClick={this.handleReviewPagination}><a>1</a></li>
-									    <li data-id="2" onClick={this.handleReviewPagination}><a>2</a></li>
-									    <li data-id="3" onClick={this.handleReviewPagination}><a>3</a></li>
-									    <li data-id="4" onClick={this.handleReviewPagination}><a>4</a></li>
-									    <li data-id="5" onClick={this.handleReviewPagination}><a>5</a></li>
-									    <li data-id="6" onClick={this.handleReviewPagination}><a>6</a></li>
-									<li data-id={parseInt(this.state.showingReview) + 1} onClick={this.handleReviewPagination}>
+								    	{this.getReviewPaginationButtons()}
+									<li className={reviewNextButtonClass} data-id={parseInt(this.state.showingReview) + 1} onClick={this.handleReviewPagination}>
 								      <a aria-label="Next">
 								        <span aria-hidden="true">&gt;</span>
 								      </a>
@@ -298,7 +326,7 @@ const Repo = React.createClass({
 		return (
 			<div className="col-md-6 repo-container">
 				<div className="repo-name">{this.props.repoModel.get('name')}</div>
-				<p>Description: {this.props.repoModel.get('description')}</p>
+				<p>Description: <span>{this.props.repoModel.get('description')}</span></p>
 				<p>Live Site: <a target="_blank" href={this.props.repoModel.get('homepage')}>{liveUrl[1]}</a></p>
 				<p>Source Code: <a target="_blank" href={this.props.repoModel.get('html_url')}> {sourceUrl[1]}</a></p>
 			</div>

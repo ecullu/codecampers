@@ -6,11 +6,19 @@ src: url("./bebas_neue/TTF's/BebasNeue_Book.ttf") format("truetype");
 font-family: 'BebasNeue Regular';
 src: url("./bebas_neue/TTF's/BebasNeue_Regular.ttf") format("truetype");
 }
+@font-face {
+font-family: 'Gotham Rounded Book';
+src: url("./GothamRoundedBook_21018.ttf") format("truetype");
+}
 
 * {
 	font-family: 'Verela Round', Helvetica, Arial, sans-serif;
 	box-sizing: border-box;
 
+}
+
+body{
+	background-color: #DEDEDE
 }
 
 h1 {
@@ -26,7 +34,7 @@ h1 {
 	left: 0;
 	z-index: 600;
 	width: 100%;
-	background-color: #ddd;
+	background-image: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSpgC-FP-bcCWQ7a56TItWVGapzkLv5-6k8i01-8Bey3cQEI0r82Q");
 }
 
 /*sets container below header*/
@@ -34,25 +42,41 @@ h1 {
 	margin: 10em 0 0 5em;
 }
 
+.user-container{
+	background-color: #f2f2f2;
+	border: 1px solid #c2d2d6;
+	border-radius: 1em;
+}
+
 /*styles header nav buttons*/
 .nav-bar {
-    font-size: 2em;
-    letter-spacing: .1em;
+    font-size: 1.75em;
+    letter-spacing: 1px;
     vertical-align: middle;
     margin-top: 0.5em;
     text-align: center;
+    padding-right: 2.5em;
+}
+
+.nav-bar > a {
+	color: #C0D1CE;
+    text-decoration: none;
+    margin-right: 1em;
 }
 
 .logo h5{
 	font-family: 'BebasNeue Regular', sans-serif;
 	font-size: 4em;
-	color: #111;
 	letter-spacing: 0.1em;
+	text-align: center;
+	color: slategrey;
 }
 
 /*prevents user images to overflow container*/
 .photo img{
 	max-width: 100%;
+	border: 1px solid #c2d2d6;
+	border-radius: .3em;
 }
 
 .repo-container{
@@ -70,14 +94,22 @@ h1 {
 	width: 100%;
 	margin: 0;
 	background-color: #fafbfe;
-	height: 25vh;
+	height: auto;
 }
 
 .repo-container p{
 	font-size: .7em;
-	color: #e05915;
+	color: slategrey;
 	padding-right: 15px;
 	padding-left: 15px;
+}
+
+.repo-container span{
+	color: #1E2A2D;
+}
+
+.col-md-6.repo-container > * {
+	padding: 0;
 }
 
 /*repo header*/
@@ -104,12 +136,13 @@ h1 {
 }
 
 .review {
-	font-family: 'Varela Round', sans-serif;
-	background-color: rgba(221, 221, 221, .3);
-	border: 0 1px 1px 1px solid #ddd;
+	font-family: 'Gotham Rounded Book', sans-serif;
+	/*background-color: rgba(221, 221, 221, .3);*/
+	background-color: #fafbfe;
 	border-radius: 0 .2em 0 0;
 	height: 25vh;
 	overflow: scroll;
+	border: 1px solid #ddd;
 	border-top-width: 0px;
 }
 
@@ -162,13 +195,14 @@ h1 {
 .active-tab{
 	font-weight: bolder;
 	color: snow;
-	background-color: #e05915;
+	background-color: #668f99;
 }
 .active-tab button{
 	color: snow;
 }
 
 .user-details{
+	font-family: 'Gotham Rounded Book', sans-serif;
 	font-size: .9em;
 	padding: 0px;
 }
@@ -190,7 +224,9 @@ h1 {
 
 .user-info{
 	margin-bottom: 1em;
-	background-color: #fafbfe;
+	/*background-color: #fafbfe;*/
+	border-bottom: .5em solid #c2d2d6;
+	padding-bottom: 1em;
 }
 
 /*github and review tab buttons*/
@@ -205,16 +241,29 @@ h1 {
     margin: auto;
 }
 
-#register-form *{
-	font-family: 'BebasNeue_Book';
-	color: #111;
+label{
+	font-family: 'Gotham Rounded Book', sans-serif;
+	color: #1E2A2D;
 }
+
+/*#edit-form label {
+	font-family: 'Gotham Rounded Book', sans-serif;
+	color: #1E2A2D;
+}*/
 
 /*adds pointer cursor effect on sign in and logout buttons in header*/
 .nav-bar > a:hover {
 	cursor: pointer;
 	text-decoration: none;
-	font-weight: bolder;
+	text-shadow: 0 0 1px snow;
+	color: snow;
+}
+
+.username h3{
+	text-align: center;
+	color: #1E2A2D;
+	letter-spacing: .1em;
+	/*background-color: #DEDEDE;*/
 }
 
 /*changes the repo navigation bar cursor to pointer */
