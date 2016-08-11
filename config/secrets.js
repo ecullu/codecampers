@@ -1,4 +1,4 @@
 module.exports = {
 	sessionSecret: 'friendship',
-	GITHUB_TOKEN: 'bd09bb16e3818e1bef63ed07ee29881e63b8a04b'
+	GITHUB_TOKEN: '881edf13c2c52d769fa10ba26bc1fd1d5ff936fa'
 }
