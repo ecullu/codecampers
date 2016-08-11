@@ -55,7 +55,7 @@ let User = require('../db/schema.js').User
             console.log('callback from saving user')
             if (err) {
               console.log(err)
-              return res.json(err)
+              return res.status(400).json(err)
             }
             res.json(user)
           })

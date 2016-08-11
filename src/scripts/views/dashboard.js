@@ -32,17 +32,39 @@ const Dashboard = React.createClass({
 })
 
 const UserContainer = React.createClass({
+	getUserCollArray: function(){
+		let userCollArr = []
+		// console.log('user coll length',this.props.userColl.length)
+		let i = 0;
+		while( i < this.props.userColl.length){
+			let user = this.props.userColl.models[i]
+			let user2 = this.props.userColl.models[i+1]
+			userCollArr.push(
+				<div className="row" key={i}>
+					<User userModel={user} key={user.id} />
+					<User userModel={user2} key={user2.id} />
+				</div>
+			)
+			i=i+2
+		}
+		// console.log('user coll array',userCollArr)
+		return userCollArr
+	},
+	// {this.props.userColl.map((user)=> <User userModel={user} key={user.id} />)}
+
 	render: function(){
-		console.log('users in container', this.props.userColl)
+		// console.log('users in container', this.props.userColl)
+		// console.log('user coll length',this.props.userColl.length)
+		this.getUserCollArray()
 		return (
-				<div className="UsersContainer">
-					{this.props.userColl.map((user)=> <User userModel={user} key={user.id} />)}
+				<div className="row UsersContainer">
+					{this.getUserCollArray()}
 				</div>
 			)
 	}
 })
 
-							// {this.fetchGithubRepo().map((repo) => <Repo repoModel={repo} />)}
+// {this.fetchGithubRepo().map((repo) => <Repo repoModel={repo} />)}
 
 
 const User = React.createClass({
@@ -123,12 +145,12 @@ const User = React.createClass({
 		let repoLength = this.state.userRepos.length
 		let repoColl = this.state.userRepos.map((repo) => <Repo key={repo.cid} repoModel={repo} />)
 		let displayedRepos = []
-		for (let i = startIndex; i < (startIndex+4); i++){
+		for (let i = startIndex; i < (startIndex+2); i++){
 			displayedRepos.push(repoColl[i]) 
 		}
-		console.log('repo length', this.state.userRepos.length)
-		console.log('repo collection',repoColl)
-		console.log('displayed repos', displayedRepos)
+		// console.log('repo length', this.state.userRepos.length)
+		// console.log('repo collection',repoColl)
+		// console.log('displayed repos', displayedRepos)
 		return displayedRepos
 	},
 
@@ -137,15 +159,15 @@ const User = React.createClass({
 		// console.log('page', showingPage)
 		// console.log('handingling page navigation')
 			let repoIndex = (showingPage-1)*4
-			console.log('page', showingPage)
-			console.log('repo index',repoIndex)
+			// console.log('page', showingPage)
+			// console.log('repo index',repoIndex)
 			this.setState({
 				showingRepoIndex: repoIndex
 			})
 	},
 
 	handleReviewPagination: function(event){
-		console.log('changing review state')
+		// console.log('changing review state')
 		this.setState({
 			showingReview: event.currentTarget.dataset.id
 		})
@@ -154,7 +176,7 @@ const User = React.createClass({
 	getReviewPaginationButtons: function (){
 		let reviewNavButtonClass = ""
 		let reviewNavButtonArr = []
-		console.log('showing review',this.state.showingReview)
+		// console.log('showing review',this.state.showingReview)
 		for (let i = 1; i <= 4; i++){
 			if(parseInt(this.state.showingReview) === i){
 				reviewNavButtonClass = "active"
@@ -194,18 +216,20 @@ const User = React.createClass({
 	},
 
 	render: function(){
+		let userCollIndex = this.props.userModel.cid.substr(1)
 		let repoIndex = this.state.showingRepoIndex
 		// console.log('button arr length', this.getPaginationButtons().length)
 		// console.log('showingRepoIndex',repoIndex)
-		console.log('showing review', this.state.showingReview)
+		// console.log('showing review', this.state.showingReview)
 		let ghClass = 'github',
 			reviewClass = 'review-container hidden',
-			ghTabClass = 'active-tab github-tab ',
+			ghTabClass = 'active active-tab',
 			reviewTabClass = 'review-tab',
 			prevButtonClass = '',
 			nextButtonClass = '',
 			reviewPrevButtonClass = '',
-			reviewNextButtonClass = ''
+			reviewNextButtonClass = '',
+			userClass = 'col-md-6'
 
 		// limit functionality of arrow buttons based on current page
 		if(this.state.showingReview === "1"){
@@ -223,90 +247,103 @@ const User = React.createClass({
 		}
 
 		if (this.state.activeTab === 'reviews') {
-			console.log('checking active tab')
+			// console.log('checking active tab')
 			reviewClass = 'review-container'
-			ghClass = 'hidden github'
-			ghTabClass = 'github-tab'
-			reviewTabClass = 'active-tab review-tab '
+			ghClass = 'github hidden'
+			ghTabClass = ''
+			reviewTabClass = 'active active-tab'
+		}
+		// adds offset only user on the right
+		if(userCollIndex%2 === 0){
+			userClass = "col-md-6"
 		}
 
+		// console.log('user props', this.props.userModel)
 		// console.log('fetch repo',this.state.userRepos)
 		return (
-				<div className="col-md-6 user-container">
-					<div className="col-md-12 username">
-							<h3>{this.props.userModel.get('firstName')} {this.props.userModel.get('lastName')}</h3>
-					</div>
-					<div className="row user-info">
-						<div className="col-md-4 photo">
-							<img src={this.props.userModel.get('pictureUrls').values[0]}/>
+				<div className={userClass}>
+					<div className="user-container">
+						<div className="col-md-12 username">
+								<h3>{this.props.userModel.get('firstName')} {this.props.userModel.get('lastName')}</h3>
 						</div>
-						<div className="col-md-8 user-details">
-							<p>Bootcamp: {this.props.userModel.get('bootcamp').campName}</p>
-							<p>Campus Location: {this.props.userModel.get('bootcamp').location}</p>
-							<p>Course: {this.props.userModel.get('bootcamp').course}</p>
-							<hr/>
-							<p>Portfolio: <a href={this.props.userModel.get('personal').portfolioUrl}>{this.props.userModel.get('personal').portfolioUrl}</a></p>
-							<p>Degree: {this.props.userModel.get('personal').degree}</p>
-							<p>Company: {this.props.userModel.get('positions').values[0].company.name}</p>
-							<p>Title: {this.props.userModel.get('positions').values[0].title}</p>
+						<div className="row user-info">
+							<div className="col-md-4 col-sm-4 col-xs-4 photo">
+								<img src={this.props.userModel.get('pictureUrls').values[0]}/>
+							</div>
+							<div className="col-md-8 col-sm-8 col-xs-8 user-details">
+								<p>Bootcamp: {this.props.userModel.get('bootcamp').campName}</p>
+								<p>Campus Location: {this.props.userModel.get('bootcamp').location}</p>
+								<p>Course: {this.props.userModel.get('bootcamp').course}</p>
+								<hr/>
+								<p>Portfolio: <a href={this.props.userModel.get('personal').portfolioUrl}>{this.props.userModel.get('personal').portfolioUrl}</a></p>
+								<p>Degree: {this.props.userModel.get('personal').degree}</p>
+								<p>Company: {this.props.userModel.get('positions').values[0].company.name}</p>
+								<p>Title: {this.props.userModel.get('positions').values[0].title}</p>
+								<p>Contact: {this.props.userModel.get('emailAddress')}</p>
 
-						</div>
-					</div>
-					<div className="user-slider">
-						<div className="tabs">
-							<ul className="nav nav-tabs">
-								<li role="presentation" className="active"><a onClick={this.showGithub}>GitHub </a></li>
-								<li role="presentation"><a onClick={this.showReviews}> Bootcamp Review</a></li>
-							</ul>
-							{/*
-							<div className={ghTabClass} onClick={this.showGithub}>
-								 GitHub 
 							</div>
-							<div className={reviewTabClass} onClick={this.showReviews}>
-								 Bootcamp Review 
-							</div>	
-							*/}						
 						</div>
-						<div className={ghClass}>
-							<div className="row repo-coll">
-								{this.getRepoColl(repoIndex)}
-								{/*{this.state.userRepos.map((repo) => <Repo key={repo.cid} repoModel={repo} />)}*/}
-							</div>
-							<nav aria-label="...">
-								<ul className="pagination">
-									 <li className={prevButtonClass} data-id={Math.ceil((parseInt(this.state.showingRepoIndex)+ 4)/4) - 1} onClick={this.handleRepoPagination}>
-								       <a aria-label="Previous">
-								         <span aria-hidden="true">&lt;</span>
-								       </a>
-								    </li>
-									{this.getPaginationButtons()}
-									<li className={nextButtonClass} data-id={Math.ceil((parseInt(this.state.showingRepoIndex) + 4)/4) + 1} onClick={this.handleRepoPagination}>
-								      <a aria-label="Next">
-								        <span aria-hidden="true">&gt;</span>
-								      </a>
-									</li>
+						<div className="user-slider">
+							<div className="tabs">
+								<ul className="nav nav-tabs">
+									<li role="presentation" className={ghTabClass}><a onClick={this.showGithub}>GitHub </a></li>
+									<li role="presentation" className={reviewTabClass}><a onClick={this.showReviews}> Bootcamp Review</a></li>
 								</ul>
-							</nav>
-						</div>
-						<div className={reviewClass}>
-							<div className="review">
-								{this.getReview(this.state.showingReview)}
+								{/*
+								<div className={ghTabClass} onClick={this.showGithub}>
+									 GitHub 
+								</div>
+								<div className={reviewTabClass} onClick={this.showReviews}>
+									 Bootcamp Review 
+								</div>	
+								*/}						
 							</div>
-							<nav aria-label="...">
-								<ul className="pagination">
-									 <li className={reviewPrevButtonClass} data-id={parseInt(this.state.showingReview) - 1} onClick={this.handleReviewPagination}>
-								       <a aria-label="Previous">
-								         <span aria-hidden="true">&lt;</span>
-								       </a>
-								    </li>
-								    	{this.getReviewPaginationButtons()}
-									<li className={reviewNextButtonClass} data-id={parseInt(this.state.showingReview) + 1} onClick={this.handleReviewPagination}>
-								      <a aria-label="Next">
-								        <span aria-hidden="true">&gt;</span>
-								      </a>
-									</li>
-								</ul>
-							</nav>					
+							<div className={ghClass}>
+								<div className="repo-container">
+									<div className="row repo-coll">
+										{this.getRepoColl(repoIndex)}
+										{/*{this.state.userRepos.map((repo) => <Repo key={repo.cid} repoModel={repo} />)}*/}
+									</div>
+									<div className="row repo-coll">
+										{this.getRepoColl(parseInt(repoIndex) + 2)}
+									</div>
+								</div>
+								<nav aria-label="...">
+									<ul className="pagination">
+										 <li className={prevButtonClass} data-id={Math.ceil((parseInt(this.state.showingRepoIndex)+ 4)/4) - 1} onClick={this.handleRepoPagination}>
+									       <a aria-label="Previous">
+									         <span aria-hidden="true">&lt;</span>
+									       </a>
+									    </li>
+										{this.getPaginationButtons()}
+										<li className={nextButtonClass} data-id={Math.ceil((parseInt(this.state.showingRepoIndex) + 4)/4) + 1} onClick={this.handleRepoPagination}>
+									      <a aria-label="Next">
+									        <span aria-hidden="true">&gt;</span>
+									      </a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+							<div className={reviewClass}>
+								<div className="review">
+									{this.getReview(this.state.showingReview)}
+								</div>
+								<nav aria-label="...">
+									<ul className="pagination">
+										 <li className={reviewPrevButtonClass} data-id={parseInt(this.state.showingReview) - 1} onClick={this.handleReviewPagination}>
+									       <a aria-label="Previous">
+									         <span aria-hidden="true">&lt;</span>
+									       </a>
+									    </li>
+									    	{this.getReviewPaginationButtons()}
+										<li className={reviewNextButtonClass} data-id={parseInt(this.state.showingReview) + 1} onClick={this.handleReviewPagination}>
+									      <a aria-label="Next">
+									        <span aria-hidden="true">&gt;</span>
+									      </a>
+										</li>
+									</ul>
+								</nav>					
+							</div>
 						</div>
 					</div>
 				</div>
@@ -320,11 +357,14 @@ const Repo = React.createClass({
 		let sourceUrl = ""
 		if(this.props.repoModel.get('homepage')){ //splits url after data is fetched
 			liveUrl = this.props.repoModel.get('homepage').split('//')
+			// sourceUrl = this.props.repoModel.get('html_url').split('//')
+		}
+		if(this.props.repoModel.get('html_url')){
 			sourceUrl = this.props.repoModel.get('html_url').split('//')
 		}
 		
 		return (
-			<div className="col-md-6 repo-container">
+			<div className="col-md-6 col-sm-6 col-xs-6 repo-container">
 				<div className="repo-name">{this.props.repoModel.get('name')}</div>
 				<p>Description: <span>{this.props.repoModel.get('description')}</span></p>
 				<p>Live Site: <a target="_blank" href={this.props.repoModel.get('homepage')}>{liveUrl[1]}</a></p>

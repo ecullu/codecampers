@@ -24,7 +24,7 @@ const Header = React.createClass({
 					</div>
 					<div className="col-md-4 nav-bar">
 						<a href="#home"> Home </a>
-						<a className={profileClass} href="#edit">Profile</a>
+						<a className={profileClass} href="#edit">My Profile</a>
 						<a className={logoutClass} onClick={ACTIONS.logUserOut} name="logout"> Log Out </a>
 						<a className={loginClass} onClick={ACTIONS.signInUser} name="signin"> Sign In</a>
 					</div>

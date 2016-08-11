@@ -55,7 +55,7 @@ const ACTIONS = {
 	logUserOut: function (){
 		IN.User.logout(()=>{
 			console.log('logging outtt!!')
-			location.hash = "home"
+			location.hash = "logout"
 		})
 	},
 

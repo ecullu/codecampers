@@ -47,7 +47,7 @@ const EditForm = React.createClass({
 	render: function(){
 		console.log('props in edit form',this.props.currentDbUser)
 		return (
-			<div className="edit-form">
+			<div id="edit-form">
 				<form onSubmit={this._handleUpdate}>
 				<h3>Profile</h3>
                     	<div className="form-group">

@@ -7,10 +7,10 @@ const Schema = mongoose.Schema;
 // ----------------------
 
 const Position = new Schema({
-  summary: { type: String, required: true },
-  title: { type: String, required: true },
+  summary: { type: String },
+  title: { type: String },
   company: { 
-              name: {type: String, required: true }
+              name: {type: String }
             }
 })
 
@@ -23,14 +23,14 @@ const usersSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   headline: { type: String, required: true },
-  pictureUrl: { type: String, required: true },
+  pictureUrl: { type: String },
   pictureUrls: {
     _total: { type: String, required: true },
     values: { type: [String], required: true }
   },
   positions: {
-    _total: { type: String, required: true },
-    values: { type: [Position], required: true }
+    _total: { type: String },
+    values: { type: [Position] }
   },
   personal: {
     githubName: { type: String, required: true},
