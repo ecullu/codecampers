@@ -34,17 +34,34 @@ const Dashboard = React.createClass({
 const UserContainer = React.createClass({
 	getUserCollArray: function(){
 		let userCollArr = []
-		// console.log('user coll length',this.props.userColl.length)
+		console.log('user coll length',this.props.userColl)
 		let i = 0;
 		while( i < this.props.userColl.length){
 			let user = this.props.userColl.models[i]
+			console.log('user 1', user)
 			let user2 = this.props.userColl.models[i+1]
-			userCollArr.push(
+			console.log('user 2', user2)
+			if(!user2){
+				userCollArr.push(
+				<div className="row" key={i}>
+					<User userModel={user} key={user.id} />
+				</div>
+				)
+			}
+			else{
+				userCollArr.push(
 				<div className="row" key={i}>
 					<User userModel={user} key={user.id} />
 					<User userModel={user2} key={user2.id} />
 				</div>
-			)
+				)
+			}
+			// userCollArr.push(
+			// 	<div className="row" key={i}>
+			// 		<User userModel={user} key={user.id} />
+			// 		<User userModel={user2} key={user2.id} />
+			// 	</div>
+			// )
 			i=i+2
 		}
 		// console.log('user coll array',userCollArr)

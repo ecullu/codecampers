@@ -81,7 +81,7 @@ const ACTIONS = {
             (responseData) => {
                 toastr.success("Thanks for your feedback", "You have registered successfully!")
                 console.log(responseData)
-                location.hash = "home"
+                // location.hash = "home"
                 ACTIONS.fetchUsers()
             },
             (error) => {

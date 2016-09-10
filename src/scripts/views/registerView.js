@@ -87,20 +87,24 @@ const RegisterForm = React.createClass({
 							<input name="portfolioUrl" className="form-control" type="url" placeholder="Enter website url" />
 	                    </div>
 	                    <div className="form-group">
-		                    <label htmlFor="ratio" >What is your opinion about instructor/student ratio ? </label>
+		                    <label htmlFor="ratio" >What was your instructor/student ratio?</label>
 		                    <textarea className="form-control" rows="6" name="ratio"/>
 		                </div>
 		                <div className="form-group">
-							<label htmlFor="investment">Boot camp is a big investment, where do you think the money goes in bootcamps ? </label>
+							<label htmlFor="investment">Bootcamp is a big investment. How can your experience gain you a return on your investment?</label>
 							<textarea className="form-control" rows="6" name="investment"/>
 		                </div>
 		                <div className="form-group">
-							<label htmlFor="advantages">What are the advantages of bootcamps compare to online courses ? </label>
+							<label htmlFor="advantages">Why did you choose in person classes as opposed to online?</label>
 							<textarea className="form-control" rows="6" name="advantages"/>
 		                </div>
 		                <div className="form-group">
-		                    <label htmlFor="instructor">How did you like the instructor ?</label>
+		                    <label htmlFor="instructor">What qualifications and/or teaching qualities did your instructor have that were beneficial?</label>
 		                    <textarea className="form-control" rows="6" name="instructor"/>
+	                    </div>
+	                    <div className="form-group">
+		                    <label htmlFor="recommendation">Would you recommend others attending?</label>
+		                    <textarea className="form-control" rows="6" name="recommendation"/>
 	                    </div>
 	                    <button className="btn btn-primary" type="submit">Save</button>
                 	</form>
