@@ -25,7 +25,6 @@ const RegisterForm = React.createClass({
         ACTIONS.registerUser({
         	personal: {
 				githubName: evt.currentTarget.githubName.value,
-				degree: evt.currentTarget.degree.value,
 				portfolioUrl: evt.currentTarget.portfolioUrl.value
 			},
 			bootcamp: {
@@ -37,7 +36,8 @@ const RegisterForm = React.createClass({
 				ratio: evt.currentTarget.ratio.value,
 				investment: evt.currentTarget.investment.value,
 				advantages: evt.currentTarget.advantages.value,
-				instructor: evt.currentTarget.instructor.value
+				instructor: evt.currentTarget.instructor.value,
+				recommendation: evt.currentTarget.recommendation.value
 			}
         })
     },
@@ -50,31 +50,28 @@ const RegisterForm = React.createClass({
 		                    
 
 	render: function(){
+		const requiredSymbolStyle = {color: '#c55'}
 		return (
 				<div id="register-form">
 					<form onSubmit={this._handleRegister}>
                     	<h3>Tell us about your experience</h3>
                     	<div className="form-group">
-                    		<label htmlFor="githubUsername"> Github Username (required)</label>
-                    		<input name="githubName" className="form-control" placeholder="Enter your GitHub Username" required/>
+                    		<label htmlFor="githubUsername"> Github Username <span style={requiredSymbolStyle}>*</span></label>
+                    		<input name="githubName" className="form-control" placeholder="Please enter your GitHub Username" required/>
                     	</div>
-                    	<div className="form-group">
-                    		<label htmlFor="degree"> Degree (required)</label>
-		                    <input name="degree" className="form-control" placeholder="Enter your degree" required/>
-		                </div>
 		                <div className="form-group">
-		                	<label htmlFor="campName"> Bootcamp Name (required) </label>
-		                	<input name="campName" className="form-control" type="text" defaultValue="The Iron Yard" placeholder="Enter the name of bootcamp" required/>
+		                	<label htmlFor="campName"> Bootcamp Name <span style={requiredSymbolStyle}>*</span> </label>
+		                	<input name="campName" className="form-control" type="text" defaultValue="The Iron Yard" placeholder="Please enter the name of bootcamp" required/>
 		                </div>
 	    				<div className="form-group">
-	    					<label htmlFor="location">Bootcamp Location (required) </label>
-		                    <input name="location" className="form-control" type="text" list="cities" placeholder="Enter bootcamp location" required/>
+	    					<label htmlFor="location">Bootcamp Location <span style={requiredSymbolStyle}>*</span> </label>
+		                    <input name="location" className="form-control" type="text" list="cities" placeholder="Please enter bootcamp location" required/>
 		                    <datalist id="cities">
 			 					{this._getCityList()}
 			                </datalist>
 			            </div>
 			            <div className="form-group">
-			            	<label htmlFor="course">Select your program (required)</label>
+			            	<label htmlFor="course">Select your program <span style={requiredSymbolStyle}>*</span></label>
 		                    <select name="course" className="form-control" defaultValue="default" required>
 	                    	  <option value="default" disabled ></option>
 							  <option value="Ruby On Rails">Ruby On Rails</option> 
@@ -84,7 +81,7 @@ const RegisterForm = React.createClass({
 						</div> 
 						<div className="form-group">
 							<label htmlFor="portfolioUrl"> Enter your portfolio website</label>
-							<input name="portfolioUrl" className="form-control" type="url" placeholder="Enter website url" />
+							<input name="portfolioUrl" className="form-control" type="url" placeholder="Please enter your portfolio url" />
 	                    </div>
 	                    <div className="form-group">
 		                    <label htmlFor="ratio" >What was your instructor/student ratio?</label>

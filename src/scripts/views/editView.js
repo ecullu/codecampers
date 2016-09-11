@@ -51,26 +51,22 @@ const EditForm = React.createClass({
 				<form onSubmit={this._handleUpdate}>
 				<h3>Profile</h3>
                     	<div className="form-group">
-                    		<label htmlFor="githubUsername"> Github Username (required)</label>
+                    		<label htmlFor="githubUsername"> Github Username <span style={requiredSymbolStyle}>*</span></label>
                     		<input name="githubName" className="form-control" defaultValue={this.props.currentDbUser.get('personal').githubName} required/>
                     	</div>
-                    	<div className="form-group">
-                    		<label htmlFor="degree"> Degree (required)</label>
-		                    <input name="degree" className="form-control" defaultValue={this.props.currentDbUser.get('personal').degree} required/>
-		                </div>
 		                <div className="form-group">
-		                	<label htmlFor="campName"> Bootcamp Name (required) </label>
+		                	<label htmlFor="campName"> Bootcamp Name <span style={requiredSymbolStyle}>*</span></label>
 		                	<input name="campName" className="form-control" type="text" defaultValue={this.props.currentDbUser.get('bootcamp').campName} required/>
 		                </div>
 	    				<div className="form-group">
-	    					<label htmlFor="location">Bootcamp Location (required) </label>
+	    					<label htmlFor="location">Bootcamp Location <span style={requiredSymbolStyle}>*</span></label>
 		                    <input name="location" className="form-control" type="text" list="cities" defaultValue={this.props.currentDbUser.get('bootcamp').location} required/>
 		                    <datalist id="cities">
 			 					{this._getCityList()}
 			                </datalist>
 			            </div>
 			            <div className="form-group">
-			            	<label htmlFor="course">Select your program (required)</label>
+			            	<label htmlFor="course">Select your program <span style={requiredSymbolStyle}>*</span></label>
 		                    <select name="course" className="form-control" defaultValue={this.props.currentDbUser.get('bootcamp').course} required>
 	                    	  <option value="default" disabled ></option>
 							  <option value="Ruby On Rails">Ruby On Rails</option> 
@@ -83,20 +79,24 @@ const EditForm = React.createClass({
 							<input name="portfolioUrl" className="form-control" type="url" defaultValue={this.props.currentDbUser.get('personal').portfolioUrl} />
 	                    </div>
 	                    <div className="form-group">
-		                    <label htmlFor="ratio" >What is your opinion about instructor/student ratio ? </label>
+		                    <label htmlFor="ratio" >What was your instructor/student ratio?</label>
 		                    <textarea className="form-control" rows="6" name="ratio" defaultValue={this.props.currentDbUser.get('review').ratio}/>
 		                </div>
 		                <div className="form-group">
-							<label htmlFor="investment">Boot camp is a big investment, where do you think the money goes in bootcamps ? </label>
+							<label htmlFor="investment">Bootcamp is a big investment. How can your experience gain you a return on your investment?</label>
 							<textarea className="form-control" rows="6" name="investment" defaultValue={this.props.currentDbUser.get('review').investment}/>
 		                </div>
 		                <div className="form-group">
-							<label htmlFor="advantages">What are the advantages of bootcamps compare to online courses ?</label>
+							<label htmlFor="advantages">Why did you choose in person classes as opposed to online?</label>
 							<textarea className="form-control" rows="6" name="advantages" defaultValue={this.props.currentDbUser.get('review').advantages}/>
 		                </div>
 		                <div className="form-group">
-		                    <label htmlFor="instructor">How did you like the instructor ?</label>
+		                    <label htmlFor="instructor">What qualifications and/or teaching qualities did your instructor have that were beneficial?</label>
 		                    <textarea className="form-control" rows="6" name="instructor" defaultValue={this.props.currentDbUser.get('review').instructor}/>
+	                    </div>
+	                    <div className="form-group">
+		                    <label htmlFor="recommendation">Would you recommend others attending?</label>
+		                    <textarea className="form-control" rows="6" name="recommendation" defaultValue={this.props.currentDbUser.get('review').recommendation}/>
 	                    </div>
 					<button type="submit" className="btn btn-primary">Save</button>
 				</form>

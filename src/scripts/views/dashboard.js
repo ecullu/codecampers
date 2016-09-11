@@ -126,7 +126,7 @@ const User = React.createClass({
 			case '1':
 			reviewContainer.push(
 				<div key="r1">
-					<h6>What is your opinion about instructor/student ratio ? </h6>
+					<h6>What was your instructor/student ratio?</h6>
 					<p>{this.props.userModel.get('review').ratio}</p>
 				 </div>
 				)
@@ -134,7 +134,7 @@ const User = React.createClass({
 			case '2':
 			reviewContainer.push(
 				<div key="r2">
-					<h6>Boot camp is a big investment, where do you think the money goes in bootcamps? </h6>
+					<h6>Bootcamp is a big investment. How can your experience gain you a return on your investment?</h6>
 					<p>{this.props.userModel.get('review').investment}</p>
 				</div>
 				)
@@ -142,7 +142,7 @@ const User = React.createClass({
 			case '3':
 			reviewContainer.push(
 				<div key="r3">
-					<h6>What were the advantages of bootcamps compare to online courses ?</h6>
+					<h6>Why did you choose in person classes as opposed to online?</h6>
 					<p>{this.props.userModel.get('review').advantages}</p>
 				</div>
 				)
@@ -150,8 +150,16 @@ const User = React.createClass({
 			case '4':
 			reviewContainer.push(
 				<div key="r4">
-					<h6>How did you like the instructor ?</h6>
+					<h6>What qualifications and/or teaching qualities did your instructor have that were beneficial?</h6>
 				    <p>{this.props.userModel.get('review').instructor}</p>
+				</div>
+				)
+			break;
+			case '5':
+			reviewContainer.push(
+				<div key="r5">
+					<h6>Would you recommend others attending?</h6>
+				    <p>{this.props.userModel.get('review').recommendation}</p>
 				</div>
 				)
 		}
@@ -194,7 +202,7 @@ const User = React.createClass({
 		let reviewNavButtonClass = ""
 		let reviewNavButtonArr = []
 		// console.log('showing review',this.state.showingReview)
-		for (let i = 1; i <= 4; i++){
+		for (let i = 1; i <= 5; i++){
 			if(parseInt(this.state.showingReview) === i){
 				reviewNavButtonClass = "active"
 			}
@@ -246,9 +254,11 @@ const User = React.createClass({
 			nextButtonClass = '',
 			reviewPrevButtonClass = '',
 			reviewNextButtonClass = '',
-			userClass = 'col-md-6'
+			userClass = 'col-md-6',
+			companyStr = '',
+			titleStr = ''
 
-		// limit functionality of arrow buttons based on current page
+		// limits functionality of arrow buttons based on current page
 		if(this.state.showingReview === "1"){
 			reviewPrevButtonClass = "disabled"
 		}
@@ -275,6 +285,16 @@ const User = React.createClass({
 			userClass = "col-md-6"
 		}
 
+		// checks if user has a current company
+		
+		if(this.props.userModel.get('positions').values.length === 0){
+			companyStr = "TIY Academy",
+			titleStr = "Web Developer"
+		}
+		else{
+			companyStr = this.props.userModel.get('positions').values[0].company.name
+			titleStr = this.props.userModel.get('positions').values[0].title
+		}
 		// console.log('user props', this.props.userModel)
 		// console.log('fetch repo',this.state.userRepos)
 		return (
@@ -293,9 +313,8 @@ const User = React.createClass({
 								<p>Course: {this.props.userModel.get('bootcamp').course}</p>
 								<hr/>
 								<p>Portfolio: <a href={this.props.userModel.get('personal').portfolioUrl}>{this.props.userModel.get('personal').portfolioUrl}</a></p>
-								<p>Degree: {this.props.userModel.get('personal').degree}</p>
-								<p>Company: {this.props.userModel.get('positions').values[0].company.name}</p>
-								<p>Title: {this.props.userModel.get('positions').values[0].title}</p>
+								<p>Company: {companyStr}</p>
+								<p>Title: {titleStr}</p>
 								<p>Contact: {this.props.userModel.get('emailAddress')}</p>
 
 							</div>

@@ -34,7 +34,6 @@ const usersSchema = new Schema({
   },
   personal: {
     githubName: { type: String, required: true},
-    degree: { type: String },
     portfolioUrl: { type: String }
   },
   bootcamp: {
@@ -46,7 +45,8 @@ const usersSchema = new Schema({
     ratio: { type: String },
     investment: { type: String },
     advantages: { type: String },
-    instructor: { type: String }
+    instructor: { type: String },
+    recommendation: { type: String }
   },
   createdAt: { type: Date, default: Date.now },
 
