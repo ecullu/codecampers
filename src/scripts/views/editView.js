@@ -45,7 +45,8 @@ const EditForm = React.createClass({
     },
 
 	render: function(){
-		console.log('props in edit form',this.props.currentDbUser)
+		let requiredSymbolStyle = {color: '#c55'}
+		// console.log('props in edit form',this.props.currentDbUser)
 		return (
 			<div id="edit-form">
 				<form onSubmit={this._handleUpdate}>

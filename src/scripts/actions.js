@@ -73,10 +73,14 @@ const ACTIONS = {
 		/// now wrap it in a backbone model and save it!
 		let user = new User(userData)
 		console.log(user)
+		toastr.options = {
+		  "positionClass": "toast-bottom-center",
+		  "timeOut": "2000"
+		}
 
 		// user.attributes = ....^^
 		// console.log('new user created', user)
-		console.log('registring usr')
+		console.log('registering usr')
 		user.save().then(
             (responseData) => {
                 toastr.success("Thanks for your feedback", "You have registered successfully!")
@@ -101,7 +105,6 @@ const ACTIONS = {
 		user.set({
 			personal: {
 				githubName: evtData.githubName.value,
-				degree: evtData.degree.value,
 				portfolioUrl: evtData.portfolioUrl.value,
 			},
 			bootcamp: {
@@ -113,7 +116,8 @@ const ACTIONS = {
 				ratio: evtData.ratio.value,
 				investment: evtData.investment.value,
 				advantages: evtData.advantages.value,
-				instructor: evtData.instructor.value
+				instructor: evtData.instructor.value,
+				recommendation: evtData.recommendation.value
 			}
 		})
 		user.save().then(function(success){

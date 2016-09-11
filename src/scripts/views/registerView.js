@@ -50,7 +50,7 @@ const RegisterForm = React.createClass({
 		                    
 
 	render: function(){
-		const requiredSymbolStyle = {color: '#c55'}
+		let requiredSymbolStyle = {color: '#c55'}
 		return (
 				<div id="register-form">
 					<form onSubmit={this._handleRegister}>
