@@ -256,7 +256,8 @@ const User = React.createClass({
 			reviewNextButtonClass = '',
 			userClass = 'col-md-6',
 			companyStr = '',
-			titleStr = ''
+			titleStr = '',
+			portfolioUrlStr = ''
 
 		// limits functionality of arrow buttons based on current page
 		if(this.state.showingReview === "1"){
@@ -295,6 +296,10 @@ const User = React.createClass({
 			companyStr = this.props.userModel.get('positions').values[0].company.name
 			titleStr = this.props.userModel.get('positions').values[0].title
 		}
+
+		//removes html:// from portfolio URL
+		portfolioUrlStr = this.props.userModel.get('personal').portfolioUrl.split('//')
+		
 		// console.log('user props', this.props.userModel)
 		// console.log('fetch repo',this.state.userRepos)
 		return (
@@ -312,7 +317,7 @@ const User = React.createClass({
 								<p>Campus Location: {this.props.userModel.get('bootcamp').location}</p>
 								<p>Course: {this.props.userModel.get('bootcamp').course}</p>
 								<hr/>
-								<p>Portfolio: <a href={this.props.userModel.get('personal').portfolioUrl}>{this.props.userModel.get('personal').portfolioUrl}</a></p>
+								<p>Portfolio: <a href={this.props.userModel.get('personal').portfolioUrl}>{portfolioUrlStr[1]}</a></p>
 								<p>Company: {companyStr}</p>
 								<p>Title: {titleStr}</p>
 								<p>Contact: {this.props.userModel.get('emailAddress')}</p>

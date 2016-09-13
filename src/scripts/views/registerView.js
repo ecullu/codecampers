@@ -80,7 +80,7 @@ const RegisterForm = React.createClass({
 							</select>
 						</div> 
 						<div className="form-group">
-							<label htmlFor="portfolioUrl"> Enter your portfolio website</label>
+							<label htmlFor="portfolioUrl"> Enter your portfolio website (eg. http://www.example.com) </label>
 							<input name="portfolioUrl" className="form-control" type="url" placeholder="Please enter your portfolio url" />
 	                    </div>
 	                    <div className="form-group">
