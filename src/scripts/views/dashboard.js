@@ -299,7 +299,7 @@ const User = React.createClass({
 
 		//removes html:// from portfolio URL
 		portfolioUrlStr = this.props.userModel.get('personal').portfolioUrl.split('//')
-		
+
 		// console.log('user props', this.props.userModel)
 		// console.log('fetch repo',this.state.userRepos)
 		return (
@@ -317,7 +317,7 @@ const User = React.createClass({
 								<p>Campus Location: {this.props.userModel.get('bootcamp').location}</p>
 								<p>Course: {this.props.userModel.get('bootcamp').course}</p>
 								<hr/>
-								<p>Portfolio: <a href={this.props.userModel.get('personal').portfolioUrl}>{portfolioUrlStr[1]}</a></p>
+								<p>Portfolio: <a target='_blank' href={this.props.userModel.get('personal').portfolioUrl}>{portfolioUrlStr[1]}</a></p>
 								<p>Company: {companyStr}</p>
 								<p>Title: {titleStr}</p>
 								<p>Contact: {this.props.userModel.get('emailAddress')}</p>
