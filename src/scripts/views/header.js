@@ -4,7 +4,6 @@ import ACTIONS from '../actions'
 const Header = React.createClass({
 
 	render: function (){
-		// console.log('rendering header')
 		let logoutClass = 'hidden',
 			loginClass = '',
 			profileClass = 'hidden'

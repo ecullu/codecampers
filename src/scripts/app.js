@@ -9,20 +9,6 @@ import RegisterView from './views/registerView'
 import EditView from './views/editView'
 
 
-// Backbone.Events.on('linkedInLoaded', (payload)=>{
-// 	console.log('linkedInLoaded in APPLICATION -- app.js')
-// 	console.log(payload)
-// 	console.log(IN)
-// 	// IN.User.logout(()=>{console.log('logiging outtt!!')})
-// 	// $.getJSON("https://api.linkedin.com/v1/people/~?format=json&callback=?").then((resData)=>{
-// 	// 	console.log('Linked in API Response: ', resData)
-// 	// })
-// 	IN.API.Raw('people/~').method('GET').result(function(resData){
-// 		console.log('Linked in API Response: ', resData)
-// 	});
-
-// })
-
 const app = function() {
 
 	var AppRouter = Backbone.Router.extend ({
@@ -57,7 +43,7 @@ const app = function() {
             location.hash = 'home'
         },
 
-        initialize: function() { //good way to add logic to check if a user is logged in to protect certain routes
+        initialize: function() {
             Backbone.history.start()
         }
     })

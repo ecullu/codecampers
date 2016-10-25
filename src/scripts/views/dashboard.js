@@ -56,22 +56,12 @@ const UserContainer = React.createClass({
 				</div>
 				)
 			}
-			// userCollArr.push(
-			// 	<div className="row" key={i}>
-			// 		<User userModel={user} key={user.id} />
-			// 		<User userModel={user2} key={user2.id} />
-			// 	</div>
-			// )
 			i=i+2
 		}
-		// console.log('user coll array',userCollArr)
 		return userCollArr
 	},
-	// {this.props.userColl.map((user)=> <User userModel={user} key={user.id} />)}
 
 	render: function(){
-		// console.log('users in container', this.props.userColl)
-		// console.log('user coll length',this.props.userColl.length)
 		this.getUserCollArray()
 		return (
 				<div className="row UsersContainer">
@@ -80,8 +70,6 @@ const UserContainer = React.createClass({
 			)
 	}
 })
-
-// {this.fetchGithubRepo().map((repo) => <Repo repoModel={repo} />)}
 
 
 const User = React.createClass({
@@ -173,26 +161,18 @@ const User = React.createClass({
 		for (let i = startIndex; i < (startIndex+2); i++){
 			displayedRepos.push(repoColl[i]) 
 		}
-		// console.log('repo length', this.state.userRepos.length)
-		// console.log('repo collection',repoColl)
-		// console.log('displayed repos', displayedRepos)
 		return displayedRepos
 	},
 
 	handleRepoPagination: function(event){
 		let showingPage = event.currentTarget.dataset.id
-		// console.log('page', showingPage)
-		// console.log('handingling page navigation')
 			let repoIndex = (showingPage-1)*4
-			// console.log('page', showingPage)
-			// console.log('repo index',repoIndex)
 			this.setState({
 				showingRepoIndex: repoIndex
 			})
 	},
 
 	handleReviewPagination: function(event){
-		// console.log('changing review state')
 		this.setState({
 			showingReview: event.currentTarget.dataset.id
 		})
@@ -201,7 +181,6 @@ const User = React.createClass({
 	getReviewPaginationButtons: function (){
 		let reviewNavButtonClass = ""
 		let reviewNavButtonArr = []
-		// console.log('showing review',this.state.showingReview)
 		for (let i = 1; i <= 5; i++){
 			if(parseInt(this.state.showingReview) === i){
 				reviewNavButtonClass = "active"
@@ -225,7 +204,6 @@ const User = React.createClass({
 		else{
 			totalPages = Math.ceil(this.state.userRepos.length/4)
 		}
-		// console.log(totalPages)
 		for(let i = 1; i <= totalPages; i ++){
 			// highlights the active button
 			if(currentPage === i){
@@ -236,16 +214,12 @@ const User = React.createClass({
 			}
 			navButtonArr.push( <li data-id={i} key={i} className={navButtonClass} onClick={this.handleRepoPagination}><a>{i}</a></li>)
 		}
-		// console.log('nav button arr',navButtonArr)
 		return navButtonArr
 	},
 
 	render: function(){
 		let userCollIndex = this.props.userModel.cid.substr(1)
 		let repoIndex = this.state.showingRepoIndex
-		// console.log('button arr length', this.getPaginationButtons().length)
-		// console.log('showingRepoIndex',repoIndex)
-		// console.log('showing review', this.state.showingReview)
 		let ghClass = 'github',
 			reviewClass = 'review-container hidden',
 			ghTabClass = 'active active-tab',
@@ -267,7 +241,6 @@ const User = React.createClass({
 			reviewNextButtonClass = "disabled"
 		}
 		if(repoIndex < 4){
-			// console.log('disabling prev button!!!!!!!!!!!!')
 			prevButtonClass = "disabled"
 		}
 		if(repoIndex >= (this.getPaginationButtons().length * 4) - 4){
@@ -275,7 +248,6 @@ const User = React.createClass({
 		}
 
 		if (this.state.activeTab === 'reviews') {
-			// console.log('checking active tab')
 			reviewClass = 'review-container'
 			ghClass = 'github hidden'
 			ghTabClass = ''
@@ -287,7 +259,6 @@ const User = React.createClass({
 		}
 
 		// checks if user has a current company
-		
 		if(this.props.userModel.get('positions').values.length === 0){
 			companyStr = "TIY Academy",
 			titleStr = "Web Developer"
@@ -300,8 +271,6 @@ const User = React.createClass({
 		//removes html:// from portfolio URL
 		portfolioUrlStr = this.props.userModel.get('personal').portfolioUrl.split('//')
 
-		// console.log('user props', this.props.userModel)
-		// console.log('fetch repo',this.state.userRepos)
 		return (
 				<div className={userClass}>
 					<div className="user-container">
@@ -330,20 +299,11 @@ const User = React.createClass({
 									<li role="presentation" className={ghTabClass}><a onClick={this.showGithub}>GitHub </a></li>
 									<li role="presentation" className={reviewTabClass}><a onClick={this.showReviews}> Bootcamp Review</a></li>
 								</ul>
-								{/*
-								<div className={ghTabClass} onClick={this.showGithub}>
-									 GitHub 
-								</div>
-								<div className={reviewTabClass} onClick={this.showReviews}>
-									 Bootcamp Review 
-								</div>	
-								*/}						
 							</div>
 							<div className={ghClass}>
 								<div className="repo-container">
 									<div className="row repo-coll">
 										{this.getRepoColl(repoIndex)}
-										{/*{this.state.userRepos.map((repo) => <Repo key={repo.cid} repoModel={repo} />)}*/}
 									</div>
 									<div className="row repo-coll">
 										{this.getRepoColl(parseInt(repoIndex) + 2)}
@@ -396,9 +356,9 @@ const Repo = React.createClass({
 	render: function(){
 		let liveUrl = ""
 		let sourceUrl = ""
-		if(this.props.repoModel.get('homepage')){ //splits url after data is fetched
+		//splits url after data is fetched
+		if(this.props.repoModel.get('homepage')){ 
 			liveUrl = this.props.repoModel.get('homepage').split('//')
-			// sourceUrl = this.props.repoModel.get('html_url').split('//')
 		}
 		if(this.props.repoModel.get('html_url')){
 			sourceUrl = this.props.repoModel.get('html_url').split('//')

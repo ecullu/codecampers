@@ -9,9 +9,7 @@ const ACTIONS = {
 	onLinkedInLoad: function() {
 		console.log('linkedInLoaded in APPLICATION -- app.js')
 		IN.Event.on(IN, "auth", ACTIONS.getProfileData)
-		IN.Event.on(IN, "logout", ACTIONS.redirectHome)
-		// ACTIONS.fetchLinkedInPeople('people/~:(id,first-name,last-name,maiden-name,email-address,positions:(id,title,summary),educations:(id,school-name,field-of-study))')
-		
+		IN.Event.on(IN, "logout", ACTIONS.redirectHome)		
 	},
 
 	getProfileData: function(){
@@ -41,7 +39,6 @@ const ACTIONS = {
 		CODERS_STORE.data.collection.fetch().then(function(){
 			let userColl = CODERS_STORE.data.collection
 			let user = CODERS_STORE.data.collection.where({linkedInId: CODERS_STORE.data.authorizedUser.linkedInId})
-			// console.log('user in get current user', user[0])
 			CODERS_STORE.set('currentDbUser', user[0])
 			console.log('coder store', CODERS_STORE.data.currentDbUser)
 		})
@@ -69,23 +66,17 @@ const ACTIONS = {
 
 	registerUser: function(extraUserDataObj) {
 		let userData = Object.assign({},CODERS_STORE.get('authorizedUser'),extraUserDataObj)
-		// console.log('register user data', userData)
-		/// now wrap it in a backbone model and save it!
 		let user = new User(userData)
 		console.log(user)
 		toastr.options = {
 		  "positionClass": "toast-bottom-center",
 		  "timeOut": "2000"
 		}
-
-		// user.attributes = ....^^
-		// console.log('new user created', user)
 		console.log('registering usr')
 		user.save().then(
             (responseData) => {
                 toastr.success("Thanks for your feedback", "You have registered successfully!")
                 console.log(responseData)
-                // location.hash = "home"
                 ACTIONS.fetchUsers()
             },
             (error) => {

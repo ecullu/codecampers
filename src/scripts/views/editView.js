@@ -14,7 +14,6 @@ const EditView = React.createClass({
 			this.setState(CODERS_STORE.getData())
 		})
 		ACTIONS.fetchUsers()
-		// ACTIONS.getCurrentUser()
 	},
 
 	componentWillUnmount: function (){
@@ -22,7 +21,6 @@ const EditView = React.createClass({
 	},
 
 	render: function(){
-		// console.log('renderin edit view')
 		return (
 				<div className="register">
 					<Header />
@@ -46,7 +44,6 @@ const EditForm = React.createClass({
 
 	render: function(){
 		let requiredSymbolStyle = {color: '#c55'}
-		// console.log('props in edit form',this.props.currentDbUser)
 		return (
 			<div id="edit-form">
 				<form onSubmit={this._handleUpdate}>
